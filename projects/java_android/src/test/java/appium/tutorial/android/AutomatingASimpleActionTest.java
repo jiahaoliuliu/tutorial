@@ -12,6 +12,7 @@ public class AutomatingASimpleActionTest extends AppiumTest {
 
     @org.junit.Test
     public void one() throws Exception {
+    	// Find a text view with the name "Accessibility" and then click
         text("Accessibility").click();
         text_exact("Accessibility Node Provider");
     }
