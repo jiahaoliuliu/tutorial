@@ -27,10 +27,34 @@ import static appium.tutorial.android.util.Helpers.driver;
 
 public class AppiumTest implements SauceOnDemandSessionIdProvider {
 
+    private static final String APACHE_LOGGING_LOG_KEY = "org.apache.commons.logging.Log";
+    private static final String APACHE_LOGGING_LOG_VALUE = "org.apache.commons.logging.impl.NoOpLog";
+
+    // Desired capabilities
+    //    Appium Version
+    private static final String APPIUM_VERSION_KEY = "appium-version";
+    private static final String APPIUM_VERSION_VALUE = "1.1.0";
+
+    //    Platform name
+    private static final String PLATFORM_NAME_KEY = "platformName";
+    private static final String PLATFORM_NAME_VALUE = "Android";
+
+    //    Device name
+    private static final String DEVICE_NAME_KEY = "deviceName";
+    private static final String DEVICE_NAME_VALUE = "Android";
+
+    //    Platform Version
+    private static final String PLATFORM_VERSION_KEY = "platformVersion";
+    private static final String PLATFORM_VERSION_VALUE = "4.3";
+
+    //    Name
+    private static final String NAME_KEY = "name";
+    private static final String NAME_VALUE = "Appium tutorial";
+
     static {
         // Disable annoying cookie warnings.
         // WARNING: Invalid cookie header
-        LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+        LogFactory.getFactory().setAttribute(APACHE_LOGGING_LOG_KEY, APACHE_LOGGING_LOG_VALUE);
     }
 
     /** Page object references. Allows using 'home' instead of 'HomePage' **/
@@ -77,13 +101,13 @@ public class AppiumTest implements SauceOnDemandSessionIdProvider {
     @Before
     public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("appium-version", "1.1.0");
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "Android");
-        capabilities.setCapability("platformVersion", "4.3");
+        capabilities.setCapability(APPIUM_VERSION_KEY, APPIUM_VERSION_VALUE);
+        capabilities.setCapability(PLATFORM_NAME_KEY, PLATFORM_NAME_VALUE);
+        capabilities.setCapability(DEVICE_NAME_KEY, DEVICE_NAME_VALUE);
+        capabilities.setCapability(PLATFORM_VERSION_KEY, PLATFORM_VERSION_VALUE);
 
         // Set job name on Sauce Labs
-        capabilities.setCapability("name", "Java Android tutorial " + date);
+        capabilities.setCapability(NAME_KEY, NAME_VALUE + " " + date);
         String userDir = System.getProperty("user.dir");
 
         URL serverAddress;

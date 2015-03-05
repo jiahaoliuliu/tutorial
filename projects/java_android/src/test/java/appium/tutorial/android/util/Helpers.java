@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class Helpers {
 
-    public static AndroidDriver mAndroidDriver;
+    public static AndroidDriver driver;
     public static URL serverAddress;
     private static WebDriverWait driverWait;
 
@@ -26,7 +26,7 @@ public abstract class Helpers {
      * Initialize the webdriver. Must be called before using any helper methods. *
      */
     public static void init(AndroidDriver webDriver, URL driverServerAddress) {
-        mAndroidDriver = webDriver;
+      driver = webDriver;
       serverAddress = driverServerAddress; 
       int timeoutInSeconds = 60;
       // must wait at least 60 seconds for running on Sauce.
@@ -38,28 +38,28 @@ public abstract class Helpers {
      * Set implicit wait in seconds *
      */
     public static void setWait(int seconds) {
-        mAndroidDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
     /**
      * Return an element by locator *
      */
     public static WebElement element(By locator) {
-        return mAndroidDriver.findElement(locator);
+        return driver.findElement(locator);
     }
 
    /**
     * Return a list of elements by locator *
     */
     public static List<WebElement> elements(By locator) {
-        return mAndroidDriver.findElements(locator);
+        return driver.findElements(locator);
     }
 
     /**
      * Press the back button *
      */
     public static void back() {
-        mAndroidDriver.navigate().back();
+        driver.navigate().back();
     }
 
     /**
@@ -154,13 +154,13 @@ public abstract class Helpers {
      * Return an element that contains name or text *
      */
     public static WebElement scroll_to(String value) {
-        return mAndroidDriver.scrollTo(value);
+        return driver.scrollTo(value);
     }
 
     /**
      * Return an element that exactly matches name or text *
      */
     public static WebElement scroll_to_exact(String value) {
-        return mAndroidDriver.scrollToExact(value);
-    }
+        return driver.scrollToExact(value);
+  }
 }
