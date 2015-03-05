@@ -6,30 +6,30 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static appium.tutorial.android.util.Helpers.*;
+import org.junit.Test;
 
 public class AutomatingASimpleActionTest extends AppiumTest {
 
-    @org.junit.Test
+    @Test
     public void one() throws Exception {
     	// Find a text view with the name "Accessibility" and then click
         text("Accessibility").click();
         text_exact("Accessibility Node Provider");
     }
 
-    @org.junit.Test
+    @Test
     public void two() throws Exception {
         wait(for_text("Accessibility")).click();
         wait(for_text_exact("Accessibility Node Provider"));
     }
 
-    @org.junit.Test
+    @Test
     public void three() throws Exception {
         wait(for_text(2)).click();
         find("Custom Evaluator");
     }
 
-  @org.junit.Test
+    @Test
     public void four() throws Exception {
         setWait(0);
 

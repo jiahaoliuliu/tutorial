@@ -1,14 +1,14 @@
 package appium.tutorial.android.page;
 
-import static appium.tutorial.android.util.Helpers.find;
+import appium.tutorial.android.util.AppiumTest;
 
 /** Page object for the home page **/
-public abstract class HomePage {
+public abstract class HomePage extends AppiumTest{
 
     /** Verify the home page has loaded.
      *  Click the accessibility button.
      *  Verify the accessibility page has loaded. **/
-    public static void accessibilityClick() {
+    public void accessibilityClick() {
         loaded();
         find("Accessibility").click();
         AccessibilityPage.loaded();

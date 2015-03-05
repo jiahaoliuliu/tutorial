@@ -1,12 +1,12 @@
 package appium.tutorial.android.page;
 
-import static appium.tutorial.android.util.Helpers.find;
+import appium.tutorial.android.util.AppiumTest;
 
 /** Page object for the accessibility page **/
-public abstract class AccessibilityPage {
+public abstract class AccessibilityPage extends AppiumTest{
 
     /** Verify the accessibility page has loaded **/
-    public static void loaded() {
+    public void loaded() {
         find("Accessibility Node Provider");
     }
 }

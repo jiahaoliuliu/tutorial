@@ -1,12 +1,12 @@
 package appium.tutorial.android.page;
 
-import static appium.tutorial.android.util.Helpers.find;
+import appium.tutorial.android.util.AppiumTest;
 
 /** Page object for the animation page **/
-public abstract class AnimationPage {
+public abstract class AnimationPage extends AppiumTest{
 
     /** Verify the animation page has loaded **/
-    public static void loaded() {
+    public  void loaded() {
         find("Bouncing Balls");
     }
 }
