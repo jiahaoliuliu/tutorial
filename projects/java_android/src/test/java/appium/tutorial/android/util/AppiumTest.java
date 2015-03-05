@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public abstract class AppiumTest extends Helpers {
+public abstract class AppiumTest extends AppiumMethodsWrapper {
 
     private static final String APACHE_LOGGING_LOG_KEY = "org.apache.commons.logging.Log";
     private static final String APACHE_LOGGING_LOG_VALUE = "org.apache.commons.logging.impl.NoOpLog";

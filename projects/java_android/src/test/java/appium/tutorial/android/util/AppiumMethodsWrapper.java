@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * http://appium.io/slate/en/tutorial/android.html?java#corrupt-ruby-gems
  * Modified by Jiahao Liu Liu
  */
-public abstract class Helpers {
+public abstract class AppiumMethodsWrapper {
 
     protected static AndroidDriver driver;
     protected static URL serverAddress;
