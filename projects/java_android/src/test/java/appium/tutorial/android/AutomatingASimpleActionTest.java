@@ -10,32 +10,32 @@ import org.junit.Test;
 
 public class AutomatingASimpleActionTest extends AppiumTest {
 
-    @Test
-    public void one() throws Exception {
-    	// Find a text view with the name "Accessibility" and then click
-        text("Accessibility").click();
-        text_exact("Accessibility Node Provider");
-    }
-
-    @Test
-    public void two() throws Exception {
-        wait(for_text("Accessibility")).click();
-        wait(for_text_exact("Accessibility Node Provider"));
-    }
-
-    @Test
-    public void three() throws Exception {
-        wait(for_text(2)).click();
-        find("Custom Evaluator");
-    }
-
+//    @Test
+//    public void one() throws Exception {
+//    	// Find a text view with the name "Accessibility" and then click
+//    	findElementContainsText("Accessibility").click();
+//    	findElementMatchesText("Accessibility Node Provider");
+//    }
+//
+//    @Test
+//    public void two() throws Exception {
+//    	waitForKey(setKeyByContainsText("Accessibility")).click();
+//    	waitForKey(setKeyByMatchesText("Accessibility Node Provider"));
+//    }
+//
+//    @Test
+//    public void three() throws Exception {
+//    	waitForKey(setKeyByIndex(2)).click();
+//        find("Custom Evaluator");
+//    }
+//
     @Test
     public void four() throws Exception {
-        setWait(0);
+    	setWaitingTimeInSeconds(0);
 
         List<String> cell_names = new ArrayList<String>();
 
-        for (WebElement cell : tags("android.widget.TextView")) {
+        for (WebElement cell : findElementsByTags("android.widget.TextView")) {
             cell_names.add(cell.getAttribute("name"));
         }
 
@@ -44,12 +44,12 @@ public class AutomatingASimpleActionTest extends AppiumTest {
 
         for (String cell_name : cell_names) {
             scroll_to_exact(cell_name).click();
-            waitInvisible(for_text_exact(cell_name));
+            waitInvisible(setKeyByMatchesText(cell_name));
             back();
-            wait(for_find("Accessibility"));
-            wait(for_find("Animation"));
+            waitForKey(for_find("Accessibility"));
+            waitForKey(for_find("Animation"));
         }
 
-        setWait(30); // restore old implicit wait
+        setWaitingTimeInSeconds(30); // restore old implicit wait
     }
 }

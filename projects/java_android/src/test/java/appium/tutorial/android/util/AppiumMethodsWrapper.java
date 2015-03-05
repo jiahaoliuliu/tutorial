@@ -37,21 +37,14 @@ public abstract class AppiumMethodsWrapper {
     /**
      * Set implicit wait in seconds *
      */
-    public void setWait(int seconds) {
+    public void setWaitingTimeInSeconds(int seconds) {
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
-    }
-
-    /**
-     * Return an element by locator *
-     */
-    public WebElement element(By locator) {
-        return driver.findElement(locator);
     }
 
    /**
     * Return a list of elements by locator *
     */
-    public List<WebElement> elements(By locator) {
+    public List<WebElement> findElementsByKey(By locator) {
         return driver.findElements(locator);
     }
 
@@ -65,14 +58,14 @@ public abstract class AppiumMethodsWrapper {
     /**
      * Return a list of elements by tag name *
      */
-    public List<WebElement> tags(String tagName) {
-        return elements(for_tags(tagName));
+    public List<WebElement> findElementsByTags(String tagName) {
+        return findElementsByKey(setKeyByTagName(tagName));
     }
 
     /**
      * Return a tag name locator *
      */
-    public By for_tags(String tagName) {
+    public By setKeyByTagName(String tagName) {
         return By.className(tagName);
     }
 
@@ -80,59 +73,67 @@ public abstract class AppiumMethodsWrapper {
      * Return a static text element by xpath index *
      */
     public WebElement s_text(int xpathIndex) {
-        return element(for_text(xpathIndex));
+        return driver.findElement(setKeyByIndex(xpathIndex));
     }
 
     /**
      * Return a static text locator by xpath index *
      */
-    public By for_text(int xpathIndex) {
+    public By setKeyByIndex(int xpathIndex) {
         return By.xpath("//android.widget.TextView[" + xpathIndex + "]");
     }
 
     /**
-     * Return a static text element that contains text *
+     * Return a static text element that contains text
+     * @param text
+     *     The text contained in the element
      */
-    public WebElement text(String text) {
-        return element(for_text(text));
+    public WebElement findElementContainsText(String text) {
+        return driver.findElement(setKeyByContainsText(text));
     }
 
     /**
-     * Return a static text locator that contains text *
+     * Return a static text locator that contains text.
+     * 
      */
-    public By for_text(String text) {
+    public By setKeyByContainsText(String text) {
         return By.xpath("//android.widget.TextView[contains(@text, '" + text + "')]");
     }
 
    /**
     * Return a static text element by exact text *
     */
-    public WebElement text_exact(String text) {
-        return element(for_text_exact(text));
+    public WebElement findElementMatchesText(String text) {
+        return driver.findElement(setKeyByMatchesText(text));
     }
 
     /**
      * Return a static text locator by exact text *
      */
-    public By for_text_exact(String text) {
+    public By setKeyByMatchesText(String text) {
         return By.xpath("//android.widget.TextView[@text='" + text + "']");
     }
 
     public By for_find(String value) {
-    	return By.xpath("//*[@content-desc=\"" + value + "\" or @resource-id=\"" + value +
-            "\" or @text=\"" + value + "\"] | //*[contains(translate(@content-desc,\"" + value +
-            "\",\"" + value + "\"), \"" + value + "\") or contains(translate(@text,\"" + value +
-            "\",\"" + value + "\"), \"" + value + "\") or @resource-id=\"" + value + "\"]");
+        String xPathExpression = 
+                "//*[@content-desc=\"" + value + "\" or "
+                  + "@resource-id=\"" + value + "\" or "
+                  + "@text=\"" + value + "\"] |"
+              + "//*[contains(translate(@content-desc,\"" + value + "\",\"" + value + "\"), \"" + value + "\") or "
+                  + "contains(translate(@text,\"" + value + "\",\"" + value + "\"), \"" + value + "\") or "
+                  + "@resource-id=\"" + value + "\"]";
+        System.out.println("xPathExpression " + xPathExpression);
+        return By.xpath(xPathExpression);
     }
 
     public WebElement find(String value) {
-        return element(for_find(value));
+        return driver.findElement(for_find(value));
     }
 
     /**
      * Wait 30 seconds for locator to find an element *
      */
-    public WebElement wait(By locator) {
+    public WebElement waitForKey(By locator) {
         return driverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 

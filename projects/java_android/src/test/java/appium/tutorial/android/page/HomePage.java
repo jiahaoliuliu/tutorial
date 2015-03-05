@@ -11,7 +11,7 @@ public abstract class HomePage extends AppiumTest{
     public void accessibilityClick() {
         loaded();
         find("Accessibility").click();
-        AccessibilityPage.loaded();
+//        AccessibilityPage.loaded();
     }
 
     /** Verify the home page has loaded.
@@ -19,12 +19,12 @@ public abstract class HomePage extends AppiumTest{
      *  Verify the animation page has loaded. **/
     public static void animationClick() {
         loaded();
-        find("Animation").click();
-        AnimationPage.loaded();
+//        find("Animation").click();
+//        AnimationPage.loaded();
     }
 
     /** Verify the home page has loaded **/
     public static void loaded() {
-        find("NFC");
+//        find("NFC");
     }
 }
