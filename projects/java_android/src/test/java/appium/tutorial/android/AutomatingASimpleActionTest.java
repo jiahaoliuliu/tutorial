@@ -35,7 +35,7 @@ public class AutomatingASimpleActionTest extends AppiumTest {
 
         List<String> cell_names = new ArrayList<String>();
 
-        for (WebElement cell : findElementsByTags("android.widget.TextView")) {
+        for (WebElement cell : findElementsByClassName("android.widget.TextView")) {
             cell_names.add(cell.getAttribute("name"));
         }
 
@@ -43,11 +43,11 @@ public class AutomatingASimpleActionTest extends AppiumTest {
         cell_names.remove(0);
 
         for (String cell_name : cell_names) {
-            scroll_to_exact(cell_name).click();
+            scrollToExact(cell_name).click();
             waitInvisible(setKeyByMatchesText(cell_name));
             back();
-            waitForKey(for_find("Accessibility"));
-            waitForKey(for_find("Animation"));
+            waitForKey(setKeyByResources("Accessibility"));
+            waitForKey(setKeyByResources("Animation"));
         }
 
         setWaitingTimeInSeconds(30); // restore old implicit wait

@@ -10,7 +10,7 @@ public abstract class HomePage extends AppiumTest{
      *  Verify the accessibility page has loaded. **/
     public void accessibilityClick() {
         loaded();
-        find("Accessibility").click();
+        findElementByResources("Accessibility").click();
 //        AccessibilityPage.loaded();
     }
 
