@@ -2,6 +2,7 @@ package appium.tutorial.android.util;
 
 import appium.tutorial.android.page.HomePage;
 import io.appium.java_client.android.AndroidDriver;
+
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -18,13 +19,30 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class AppiumTest extends AppiumMethodsWrapper {
 
+    /*
+     * The follow list of values are the one set by default.
+     * Note all the keys are "private static final". This is because the keys are immutable.
+     * 
+     * In the case of values, there are values which are "private static final". Those values
+     * are immutable.
+     * 
+     * There are other values which are "protected". Those values could be modified by the classes
+     * which inherited from this class. To do so, add the follow code to the class:
+     * 
+     *     @Override
+     *     public void setUp() throws Exception {
+     *         // Here is where you modify the value. e.g. platformVersion = "4.4";
+     *         super.setUp();
+     *     }
+     *
+     */
     private static final String APACHE_LOGGING_LOG_KEY = "org.apache.commons.logging.Log";
     private static final String APACHE_LOGGING_LOG_VALUE = "org.apache.commons.logging.impl.NoOpLog";
 
     // Desired capabilities
     //    Appium Version
     private static final String APPIUM_VERSION_KEY = "appium-version";
-    private static final String APPIUM_VERSION_VALUE = "1.1.0";
+    protected String appiumVersionValue = "1.1.0";
 
     //    Platform name
     private static final String PLATFORM_NAME_KEY = "platformName";
@@ -36,11 +54,21 @@ public abstract class AppiumTest extends AppiumMethodsWrapper {
 
     //    Platform Version
     private static final String PLATFORM_VERSION_KEY = "platformVersion";
-    private static final String PLATFORM_VERSION_VALUE = "4.3";
+    protected String platformVersionValue = "4.3";
 
     //    Name
     private static final String NAME_KEY = "name";
-    private static final String NAME_VALUE = "Appium tutorial";
+    protected static final String NAME_VALUE = "Appium tutorial";
+
+    //    App
+    private static final String APP_KEY = "app";
+    private static final String LOCAL_APP_NAME = "api.apk";
+
+    // Other properties
+    private static final String SERVER_ADDRESS = "http://127.0.0.1:4723/wd/hub";
+
+    protected int defaultWaitingTime = 30;
+    protected TimeUnit defaultWaitingTimeUnit = TimeUnit.SECONDS;
 
     static {
         // Disable annoying cookie warnings.
@@ -69,23 +97,23 @@ public abstract class AppiumTest extends AppiumMethodsWrapper {
     @Before
     public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(APPIUM_VERSION_KEY, APPIUM_VERSION_VALUE);
+        capabilities.setCapability(APPIUM_VERSION_KEY, appiumVersionValue);
         capabilities.setCapability(PLATFORM_NAME_KEY, PLATFORM_NAME_VALUE);
         capabilities.setCapability(DEVICE_NAME_KEY, DEVICE_NAME_VALUE);
-        capabilities.setCapability(PLATFORM_VERSION_KEY, PLATFORM_VERSION_VALUE);
+        capabilities.setCapability(PLATFORM_VERSION_KEY, platformVersionValue);
 
         // Set job name on Sauce Labs
         capabilities.setCapability(NAME_KEY, NAME_VALUE + " " + date);
         String userDir = System.getProperty("user.dir");
 
         URL serverAddress;
-        String localApp = "api.apk";
+        String localApp = LOCAL_APP_NAME;
         String appPath = Paths.get(userDir, localApp).toAbsolutePath().toString();
-        capabilities.setCapability("app", appPath);
-        serverAddress = new URL("http://127.0.0.1:4723/wd/hub");
+        capabilities.setCapability(APP_KEY, appPath);
+        serverAddress = new URL(SERVER_ADDRESS);
         driver = new AndroidDriver(serverAddress, capabilities);
 
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(defaultWaitingTime, defaultWaitingTimeUnit);
         init(driver, serverAddress);
     }
 
