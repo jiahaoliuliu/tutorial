@@ -88,13 +88,15 @@ public abstract class AppiumTest {
     /** Page object references. Allows using 'home' instead of 'HomePage' **/
     protected HomePage home;
 
-    private AndroidDriver mDriver;
-    private WebDriverWait driverWait;
+    // The follow elements are protected to allow the class which extends this class
+    // to use other functions if needed
+    protected AndroidDriver driver;
+    protected WebDriverWait driverWait;
 
     @Rule
     public TestRule printTests = new TestWatcher() {
         protected void starting(Description description) {
-            System.out.print("  Appium test: " + description.getMethodName());
+            System.out.print("  Appium test: " + description.getMethodName() + "\n");
         }
         
         protected void finished(Description description) {
@@ -123,18 +125,18 @@ public abstract class AppiumTest {
         String appPath = Paths.get(userDir, localApp).toAbsolutePath().toString();
         capabilities.setCapability(APP_KEY, appPath);
         serverAddress = new URL(SERVER_ADDRESS);
-        mDriver = new AndroidDriver(serverAddress, capabilities);
-        mDriver.manage().timeouts().implicitlyWait(defaultWaitingTime, defaultWaitingTimeUnit);
+        driver = new AndroidDriver(serverAddress, capabilities);
+        driver.manage().timeouts().implicitlyWait(defaultWaitingTime, defaultWaitingTimeUnit);
 
         // Create special driver for waiting
-        driverWait = new WebDriverWait(mDriver, maximumWaitingTime);
+        driverWait = new WebDriverWait(driver, maximumWaitingTime);
     }
 
     /** Run after each test **/
     @After
     public void tearDown() throws Exception {
-        if (mDriver != null) {
-        	mDriver.quit();
+        if (driver != null) {
+        	driver.quit();
         }
     }
 
@@ -143,7 +145,7 @@ public abstract class AppiumTest {
      * @param seconds The number of seconds to wait.
      */
     public void setWaitingTimeInSeconds(int seconds) {
-    	mDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
     /**
@@ -160,21 +162,21 @@ public abstract class AppiumTest {
      * Press the back button *
      */
     public void back() {
-    	mDriver.navigate().back();
+    	driver.navigate().back();
     }
 
     /**
      * Return a list of elements by tag name *
      */
     public List<WebElement> findElementsByClassName(String className) {
-        return mDriver.findElements(By.className(className));
+        return driver.findElements(By.className(className));
     }
 
     /**
      * Return a static text element by xpath index *
      */
     public WebElement findElementByIndex(int xpathIndex) {
-        return mDriver.findElement(setKeyByIndex(xpathIndex));
+        return driver.findElement(setKeyByIndex(xpathIndex));
     }
 
     /**
@@ -190,7 +192,7 @@ public abstract class AppiumTest {
      *     The text contained in the element
      */
     public WebElement findElementContainsText(String text) {
-        return mDriver.findElement(setKeyByContainsText(text));
+        return driver.findElement(setKeyByContainsText(text));
     }
 
     /**
@@ -210,7 +212,7 @@ public abstract class AppiumTest {
     *     The first element that matches with the criteria
     */
     public WebElement findElementMatchesText(String text) {
-        return mDriver.findElement(setKeyByMatchesText(text));
+        return driver.findElement(setKeyByMatchesText(text));
     }
 
     /**
@@ -250,7 +252,7 @@ public abstract class AppiumTest {
      *     The first element that matches with the criteria.
      */
     public WebElement findElementByResources(String text) {
-        return mDriver.findElement(setKeyByResources(text));
+        return driver.findElement(setKeyByResources(text));
     }
 
     /**
@@ -294,7 +296,7 @@ public abstract class AppiumTest {
      *     The element which has already scroller to such value
      */
     public WebElement scrollTo(String value) {
-        return mDriver.scrollTo(value);
+        return driver.scrollTo(value);
     }
 
     /**
@@ -303,6 +305,6 @@ public abstract class AppiumTest {
      * 
      */
     public WebElement scrollToExact(String value) {
-        return mDriver.scrollToExact(value);
+        return driver.scrollToExact(value);
   }
 }
