@@ -1,6 +1,5 @@
 package appium.tutorial.android.util;
 
-import appium.tutorial.android.page.HomePage;
 import io.appium.java_client.android.AndroidDriver;
 
 import org.apache.commons.logging.LogFactory;
@@ -85,9 +84,6 @@ public abstract class AppiumTest {
         // WARNING: Invalid cookie header
         LogFactory.getFactory().setAttribute(APACHE_LOGGING_LOG_KEY, APACHE_LOGGING_LOG_VALUE);
     }
-
-    /** Page object references. Allows using 'home' instead of 'HomePage' **/
-    protected HomePage home;
 
     // The follow elements are protected to allow the class which extends this class
     // to use other functions if needed
