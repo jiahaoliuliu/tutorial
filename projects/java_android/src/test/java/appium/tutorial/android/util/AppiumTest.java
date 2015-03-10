@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -176,14 +177,40 @@ public abstract class AppiumTest {
     }
 
     /**
-     * Return a static text element by xpath index. Note there is an error
-     * clicking on the element which contains the xPath index 1. It is posted
+     * Return a static text element by xpath index. Note since there is an error
+     * clicking on the element which contains the xPath index 1, a specific method
+     * is used in this case.
      * 
      * @param xPathIndex The idex of the element to be found
      * @return The first element matches to the criteria.
      */
     public WebElement findElementByIndex(int xPathIndex) {
+        // Set a specific case when the xPathIndex is one
+        if (xPathIndex == 1) {
+            return findFirstElementOfList();
+        }
+
         return driver.findElement(setKeyByIndex(xPathIndex));
+    }
+
+    /**
+     * Since there is a bug interacting with the first element of the list, 
+     * a specific method is used in this case.
+     * It gets the name of the element and use the method scrollToExact,
+     * which works better
+     * 
+     * @return The first WebElement of the list
+     */
+    public WebElement findFirstElementOfList() {
+      List<String> cellNames = new ArrayList<String>();
+
+      for (WebElement cell : findElementsByClassName("android.widget.TextView")) {
+      	cellNames.add(cell.getAttribute("name"));
+      }
+
+      // delete title cell
+      cellNames.remove(0);
+      return scrollToExact(cellNames.get(0));
     }
 
     /**
@@ -197,7 +224,7 @@ public abstract class AppiumTest {
     public By setKeyByIndex(int xPathIndex) {
         if (xPathIndex == 1) {
             throw new IllegalArgumentException("There is a bug by interacting with the first element of the list. Please do not use"
-            		+ "this method to find it.");
+            		+ "this method to find it. Instead, use the method findFirstElementOfList()");
         }
         return By.xpath("//android.widget.TextView[" + xPathIndex + "]");
     }

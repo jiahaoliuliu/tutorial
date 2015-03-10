@@ -31,14 +31,15 @@ public class AutomatingASimpleActionTest extends AppiumTest {
     public void three() throws Exception {
         // Wait to click on the second element of the list
         //waitForKey(setKeyByIndex(3)).click();
-    	for (int i = 1; i <= 11; i++) {
-    		WebElement webElement = findElementByIndex(i);
-    		System.out.println(webElement.toString());
+//    	for (int i = 1; i <= 11; i++) {
+//    		WebElement webElement = findElementByIndex(i);
+//    		System.out.println(webElement.toString());
 //	        WebElement newWebElement = mDriverWait.until(ExpectedConditions.visibilityOfElementLocated(
 //	            By.xpath("//android.widget.TextView[" + i + "]")));
 //	        System.out.println(newWebElement.toString());
-    	}
-//        findElementByResources("Custom View").click();
+//    	}
+    	findElementByIndex(1).click();
+        findElementByResources("Custom View").click();
     }
 
 //    @Test
