@@ -159,37 +159,54 @@ public abstract class AppiumTest {
 //    }
 
     /**
-     * Press the back button *
+     * Press the back button. Note that if we are on the main page,
+     * this might close the app.
      */
     public void back() {
     	driver.navigate().back();
     }
 
     /**
-     * Return a list of elements by tag name *
+     * Return a list of elements by class name.
+     * @param className The name of the class to look for.
+     * @return The list of elements that contains that class
      */
     public List<WebElement> findElementsByClassName(String className) {
         return driver.findElements(By.className(className));
     }
 
     /**
-     * Return a static text element by xpath index *
+     * Return a static text element by xpath index. Note there is an error
+     * clicking on the element which contains the xPath index 1. It is posted
+     * 
+     * @param xPathIndex The idex of the element to be found
+     * @return The first element matches to the criteria.
      */
-    public WebElement findElementByIndex(int xpathIndex) {
-        return driver.findElement(setKeyByIndex(xpathIndex));
+    public WebElement findElementByIndex(int xPathIndex) {
+        return driver.findElement(setKeyByIndex(xPathIndex));
     }
 
     /**
-     * Return a static text locator by xpath index *
+     * Return a text key by matching the same by xpath index. Note that actually there is a bug
+     * by interacting with the first element of the list (xPathIndex = 1), so an IllegalArgumentException
+     * will be launched.
+     * @param xPathIndex The idex of the text to be found.
+     * @return The key for the corresponding xPath.
+     * @throws IllegalArgumentException if the xPathIndex is 1.
      */
-    public By setKeyByIndex(int xpathIndex) {
-        return By.xpath("//android.widget.TextView[" + xpathIndex + "]");
+    public By setKeyByIndex(int xPathIndex) {
+        if (xPathIndex == 1) {
+            throw new IllegalArgumentException("There is a bug by interacting with the first element of the list. Please do not use"
+            		+ "this method to find it.");
+        }
+        return By.xpath("//android.widget.TextView[" + xPathIndex + "]");
     }
 
     /**
      * Return a static text element that contains text
      * @param text
      *     The text contained in the element
+     * @return The first element which contains that text.
      */
     public WebElement findElementContainsText(String text) {
         return driver.findElement(setKeyByContainsText(text));
@@ -198,7 +215,8 @@ public abstract class AppiumTest {
     /**
      * Return a static text locator that contains text.
      * @param text
-     *     The text that the element should contain.
+     *     The text that the element should contain
+     * @return the key which corresponding criteria
      */
     public By setKeyByContainsText(String text) {
         return By.xpath("//android.widget.TextView[contains(@text, '" + text + "')]");
@@ -293,7 +311,7 @@ public abstract class AppiumTest {
      * @param
      *     The value to scroll to.
      * @return
-     *     The element which has already scroller to such value
+     *     The element which has already scrolled to such value
      */
     public WebElement scrollTo(String value) {
         return driver.scrollTo(value);
@@ -302,6 +320,9 @@ public abstract class AppiumTest {
     /**
      * Return an element that exactly matches name or text
      * @param
+     *     The value to scroll to
+     * @return
+     *     The element which has already scrolled to such value
      * 
      */
     public WebElement scrollToExact(String value) {
